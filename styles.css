@@ -1,0 +1,183 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Yeseva+One&display=swap");
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+body {
+  background-color: #94a684;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  color: #0d1d29;
+}
+
+h1 {
+  font-size: 4rem;
+  text-transform: uppercase;
+  padding: 1rem;
+  line-height: 0.8;
+  font-family: "Yeseva One", sans-serif;
+  color: #e4e4d0;
+  text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+p {
+  text-decoration: underline;
+  text-transform: capitalize;
+  font-size: 1.2rem;
+}
+
+button {
+  font-family: inherit;
+  font-size: 0.938rem;
+  color: #0d1d29;
+}
+
+a {
+  text-decoration: none;
+  color: #e4e4d0;
+}
+a:hover {
+  color: #aec3ae;
+}
+
+.cash-section {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.table {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.table .table-heading {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.table .play-area {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+}
+.table .play-area .dealer {
+  width: 10em;
+  min-height: 10em;
+  border: 2px dotted #404258;
+  border-radius: 0.5em;
+  padding: 0.1em 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.table .play-area .dealer .dealer-cards {
+  font-size: 3rem;
+}
+.table .play-area .player {
+  width: 10em;
+  min-height: 10em;
+  border: 2px dotted #404258;
+  border-radius: 0.5em;
+  padding: 0.1em 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.table .play-area .player .player-cards {
+  font-size: 3rem;
+}
+.table .player-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.table .cash-section {
+  height: 10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0.6em;
+  gap: 1em;
+}
+.table .cash-section .error-box {
+  font-size: 1rem;
+}
+.table .betting-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 2em;
+}
+.table .footer {
+  text-align: center;
+  font-size: 0.937rem;
+  padding-bottom: 0.5em;
+  display: flex;
+  flex-direction: column;
+  width: 100;
+}
+.table .footer .version {
+  font-size: 0.8rem;
+}
+
+button {
+  padding: 1em 2em;
+  margin: 0.6em 0.6em;
+  border-radius: 0.5rem;
+  background-color: #e4e4d0;
+  border: 0;
+  font-weight: 400;
+  box-shadow: 4px 2px 2px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.02s ease;
+}
+
+button:hover {
+  background-color: #aec3ae;
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+button:active {
+  color: #e4e4d0;
+  transform: scale(0.96);
+}/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,43 @@
+@use '../utils' as u;
+
+body {
+	font-family: u.$ff-01;
+	color: u.$color-text;
+}
+
+h1 {
+	font-size: 4rem;
+	text-transform: uppercase;
+	padding: 1rem;
+	line-height: 0.8;
+	font-family: u.$ff-02;
+	color: u.$color-button;
+	text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+p {
+	text-decoration: underline;
+	text-transform: capitalize;
+	font-size: 1.2rem;
+}
+
+button {
+	font-family: inherit;
+	font-size: 0.938rem;
+	color: u.$color-text;
+}
+
+a {
+	text-decoration: none;
+	color: u.$color-button;
+
+	&:hover {
+		color: u.$color-03;
+	}
+}
+
+.cash-section {
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 1.2rem;
+}

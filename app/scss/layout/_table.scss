@@ -1,0 +1,95 @@
+@use '../utils' as u;
+
+.table {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	.table-heading {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.play-area {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		text-align: center;
+
+		.dealer {
+			width: 10em;
+			min-height: 10em;
+			border: 2px dotted u.$color-01;
+			border-radius: 0.5em;
+			padding: 0.1em 1em;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+
+			.dealer-cards {
+				font-size: 3rem;
+			}
+		}
+
+		.player {
+			width: 10em;
+			min-height: 10em;
+			border: 2px dotted u.$color-01;
+			border-radius: 0.5em;
+			padding: 0.1em 1em;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+
+			.player-cards {
+				font-size: 3rem;
+			}
+		}
+	}
+
+	.player-options {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.cash-section {
+		height: 10em;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 1em 0.6em;
+		gap: 1em;
+
+		.error-box {
+			font-size: 1rem;
+		}
+	}
+
+	.betting-options {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		padding-bottom: 2em;
+	}
+
+	.footer {
+		text-align: center;
+		font-size: 0.937rem;
+		padding-bottom: 0.5em;
+		display: flex;
+		flex-direction: column;
+		width: 100;
+
+		.version {
+			font-size: 0.8rem;
+		}
+	}
+}
