@@ -38,29 +38,7 @@ const largeBet = document.querySelector('#large-bet');
 const lastBet = document.querySelector('#last-bet');
 const clearBet = document.querySelector('#clear-bet');
 
-deal.onclick = () => {
-	if (isPlaying) {
-		errorBox.textContent = `Already dealt`;
-	} else {
-		if (betAmount == ``) {
-			errorBox.textContent = `Please place a bet`;
-		} else if (cashAmount == 0) {
-			errorBox.textContent = `You broke...`;
-		} else if (betAmount > cashAmount) {
-			errorBox.textContent = `Not enough cash`;
-		} else {
-			hasBet = true;
-			hasDoubled = false;
-			cashAmount -= betAmount;
-			lastBetAmount = betAmount;
-			// betAmount = 0;
-			errorBox.textContent = ``;
-			playerBet.textContent = `Bet Amount: $${betAmount}`;
-			playerCash.textContent = `Cash: $${cashAmount}`;
-			mainDeal();
-		}
-	}
-};
+//* BETTING BUTTONS
 
 tinyBet.onclick = () => {
 	if (isPlaying) {
@@ -119,55 +97,38 @@ lastBet.onclick = () => {
 	}
 };
 
+//* DEAL FUNCTION
+
+deal.onclick = () => {
+	if (isPlaying) {
+		errorBox.textContent = `Already dealt`;
+	} else {
+		if (betAmount == ``) {
+			errorBox.textContent = `Please place a bet`;
+		} else if (cashAmount == 0) {
+			errorBox.textContent = `You broke...`;
+		} else if (betAmount > cashAmount) {
+			errorBox.textContent = `Not enough cash`;
+		} else {
+			hasBet = true;
+			hasDoubled = false;
+			cashAmount -= betAmount;
+			lastBetAmount = betAmount;
+			errorBox.textContent = ``;
+			playerBet.textContent = `Bet Amount: $${betAmount}`;
+			playerCash.textContent = `Cash: $${cashAmount}`;
+			mainDeal();
+		}
+	}
+};
+
+//* MAIN DEAL FUNCTION
+
 let mainDeal = () => {
 	isPlaying = true;
 	hit = false;
-	playerCard1 = Math.floor(Math.random() * 11) + 1;
-	playerCard2 = Math.floor(Math.random() * 11) + 1;
-
-	if (playerCard1 == 11 && playerCard2 == 11) {
-		playerCard1 = 1;
-	} else if (playerCard1 == 1 && playerCard2 == 1) {
-		playerCard1 = 11;
-	}
-
-	playerHand = playerCard1 + playerCard2;
-	playerDisplay.textContent = `${playerHand}`;
-	playerHandDisplay.textContent = `${playerCard1} | ${playerCard2}`;
-
-	if (playerHand > 21) {
-		playerWin.textContent = `Bust!`;
-		isPlaying = false;
-	} else if (playerHand == 21) {
-		playerWin.textContent = `Blackjack!`;
-		collectMoney();
-		isPlaying = false;
-	} else {
-		playerWin.textContent = ``;
-	}
-
-	dealerCard1 = Math.floor(Math.random() * 11) + 1;
-	dealerCard2 = Math.floor(Math.random() * 11) + 1;
-
-	if (dealerCard1 == 11 && dealerCard2 == 11) {
-		dealerCard1 = 1;
-	} else if (dealerCard1 == 1 && dealerCard2 == 1) {
-		dealerCard1 = 11;
-	}
-
-	dealerHand = dealerCard1 + dealerCard2;
-	dealerDisplay.textContent = `${dealerHand}`;
-	dealerHandDisplay.textContent = `${dealerCard1} | ${dealerCard2}`;
-
-	if (dealerHand > 21) {
-		dealerWin.textContent = `Bust!`;
-		isPlaying = false;
-	} else if (dealerHand == 21) {
-		dealerWin.textContent = `Blackjack!`;
-		isPlaying = false;
-	} else {
-		dealerWin.textContent = ``;
-	}
+	playerDeal();
+	dealerDeal();
 };
 
 //* HIT FUNCTION
@@ -183,22 +144,26 @@ hitButton.addEventListener('click', () => {
 
 		if (playerHand > 21) {
 			playerWin.textContent = `Bust!`;
+			dealerWin.textContent = `Win!`;
 			hit = true;
 			isPlaying = false;
-		} else if (playerHand == 21) {
+		}
+		if (playerHand == 21) {
 			playerWin.textContent = `Blackjack!`;
-			whoWins();
+			dealerWin.textContent = `Lose!`;
+			collectMoney();
 			hit = true;
 			isPlaying = false;
 		}
 	}
 });
 
+//* STAND FUNCTION
+
 standButton.addEventListener('click', () => {
 	if (!isPlaying) {
 		return false;
 	} else {
-		// hit = true;
 		while (dealerHand < 17) {
 			dealerHit();
 		}
@@ -211,6 +176,7 @@ standButton.addEventListener('click', () => {
 		}
 		if (dealerHand == 21) {
 			dealerWin.textContent = `Blackjack!`;
+			playerWin.textContent = `Lose!`;
 			isPlaying = false;
 		}
 		if (dealerHand < 21) {
@@ -220,25 +186,97 @@ standButton.addEventListener('click', () => {
 	}
 });
 
+//* DOUBLE DOWN FUNCTION
+
 doubleDown.addEventListener('click', () => {
+	if (!isPlaying) {
+		return false;
+	}
 	if (playerHand == 11) {
 		hitCard = Math.floor(Math.random() * 11) + 1;
 		if (hitCard == 11) {
 			hitCard = 1;
 		}
+		cashAmount -= betAmount;
+		playerCash.textContent = `Cash: $${cashAmount}`;
+		betAmount *= 2;
+		lastBetAmount = betAmount;
+		playerBet.textContent = `Bet Amount: $${betAmount}`;
+		hasDoubled = true;
 		playerHand = playerHand + hitCard;
 		playerDisplay.textContent = `${playerHand}`;
 		playerHandDisplay.textContent = `${playerCard1} | ${playerCard2} | ${hitCard}`;
 		if (playerHand == 21) {
 			playerWin.textContent = `Blackjack!`;
-			hasDoubled = true;
 			collectMoney();
 			isPlaying = false;
 		} else {
+			betAmount /= 2;
 			standing();
 		}
 	}
 });
+
+//* PLAYER DEAL FUNCTION
+
+const playerDeal = () => {
+	playerCard1 = Math.floor(Math.random() * 11) + 1;
+	playerCard2 = Math.floor(Math.random() * 11) + 1;
+
+	if (playerCard1 == 11 && playerCard2 == 11) {
+		playerCard1 = 1;
+	}
+	if (playerCard1 == 1 && playerCard2 == 1) {
+		playerCard1 = 11;
+	}
+
+	playerHand = playerCard1 + playerCard2;
+	playerDisplay.textContent = `${playerHand}`;
+	playerHandDisplay.textContent = `${playerCard1} | ${playerCard2}`;
+
+	if (playerHand > 21) {
+		playerWin.textContent = `Bust!`;
+		isPlaying = false;
+	}
+	if (playerHand == 21) {
+		playerWin.textContent = `Blackjack!`;
+		collectMoney();
+		isPlaying = false;
+	} else {
+		playerWin.textContent = ``;
+	}
+};
+
+//* DEALER DEAL FUNCTION
+
+const dealerDeal = () => {
+	dealerCard1 = Math.floor(Math.random() * 11) + 1;
+	dealerCard2 = Math.floor(Math.random() * 11) + 1;
+
+	if (dealerCard1 == 11 && dealerCard2 == 11) {
+		dealerCard1 = 1;
+	}
+	if (dealerCard1 == 1 && dealerCard2 == 1) {
+		dealerCard1 = 11;
+	}
+
+	dealerHand = dealerCard1 + dealerCard2;
+	dealerDisplay.textContent = `${dealerHand}`;
+	dealerHandDisplay.textContent = `${dealerCard1} | ${dealerCard2}`;
+
+	if (dealerHand > 21) {
+		dealerWin.textContent = `Bust!`;
+		isPlaying = false;
+	}
+	if (dealerHand == 21) {
+		dealerWin.textContent = `Blackjack!`;
+		isPlaying = false;
+	} else {
+		dealerWin.textContent = ``;
+	}
+};
+
+//* DEALER AUTO HIT FUNCTION
 
 let dealerHit = () => {
 	hitCard = Math.floor(Math.random() * 11) + 1;
@@ -250,23 +288,40 @@ let dealerHit = () => {
 	dealerHandDisplay.textContent = `${dealerCard1} | ${dealerCard2} | ${hitCard}`;
 };
 
+//* SELECT WINNER FUNCTION
+
 let whoWins = () => {
 	if (playerHand > dealerHand) {
 		playerWin.textContent = `Win!`;
+		dealerWin.textContent = `Lose!`;
 		collectMoney();
-	} else if (dealerHand > playerHand && dealerHand < 21) {
-		dealerWin.textContent = `Wins!`;
-	} else if (playerHand == dealerHand) {
+	}
+	if (dealerHand > playerHand && dealerHand < 21) {
+		dealerWin.textContent = `Win!`;
+		playerWin.textContent = `Lose!`;
+	}
+	if (playerHand == dealerHand) {
 		playerWin.textContent = `Push!`;
 		dealerWin.textContent = `Push!`;
+		cashAmount += betAmount;
+		errorBox.textContent = `You Win: $${betAmount}`;
+		playerCash.textContent = `Cash: $${cashAmount}`;
+	}
+	if (hasDoubled && playerHand == dealerHand) {
+		playerWin.textContent = `Push!`;
+		dealerWin.textContent = `Push!`;
+		cashAmount += lastBetAmount;
+		errorBox.textContent = `You Win: $${lastBetAmount}`;
+		playerCash.textContent = `Cash: $${cashAmount}`;
 	}
 };
+
+//* USED FOR DOUBLE DOWN FUNCTION
 
 let standing = () => {
 	if (!isPlaying) {
 		return false;
 	} else {
-		// hit = true;
 		while (dealerHand < 17) {
 			dealerHit();
 		}
@@ -288,13 +343,18 @@ let standing = () => {
 	}
 };
 
+//* COLLECT MONEY FUNCTION
+
 let collectMoney = () => {
-	if (hasDoubled) {
-		let prizeMoney = lastBetAmount * 4;
+	if (hasDoubled && playerHand == 21) {
+		let prizeMoney = lastBetAmount * 3;
 		cashAmount += prizeMoney;
 		playerCash.textContent = `Cash: $${cashAmount}`;
-		errorBox.textContent = `You win : $${prizeMoney}`;
-	} else if (playerHand == 21) {
+		errorBox.textContent = `You Win $${prizeMoney}`;
+		hasDoubled = false;
+		betAmount /= 2;
+	}
+	if (playerHand == 21) {
 		let prizeMoney = lastBetAmount * 3;
 		cashAmount += prizeMoney;
 		playerCash.textContent = `Cash: $${cashAmount}`;

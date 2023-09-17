@@ -2,13 +2,15 @@
 
 [LIVE LINK](https://neitodesu.github.io/black-jack-js/)
 
+---
+
 ### Made with mobile in mind first. Desktop version still WIP.
 
 Black jack with pure RNG 🃏
 
 Made with HTML, SCSS, and Javascript.
 
-Based on pure RNG (for now until I actually implement a card system)
+Based on pure RNG
 
 **Rules**
 
@@ -18,12 +20,8 @@ Based on pure RNG (for now until I actually implement a card system)
 4. Must place bets before dealing.
 5. If you run out of cash, just refresh page.
 
-Refresh to start over.
-
 Thank you for playing!
 
 Good Luck!
 
-**Bugs**
-
-- Unable to display history of hit cards so numbers may not add up after multiple hits.
+![Screenshot](./app/assets/design/Screenshot.png)
